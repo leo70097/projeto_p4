@@ -14,7 +14,7 @@ class Utilizadores:
             connection = db.connect()
             if connection :
                 cursor = connection.cursor()
-                sql = "INSERT INTO utulizadores (id,username,password,roles) VALUES (%s, %s,%s)"
+                sql = "INSERT INTO utulizadores (id,username,password,roles) VALUES (%s, %s,%s,%s)"
                 cursor.execute(sql,(self.id,self.username,self.password,self.role))
                 connection.commit()
                 db.close(connection)
