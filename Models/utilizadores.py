@@ -19,5 +19,5 @@ class Utilizadores:
                 connection.commit()
                 db.close(connection)
 
-                #(Ola)
+                #(Ola de novo)
             
