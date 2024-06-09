@@ -2,8 +2,7 @@ from Utils.db import Database
 
 class Ticket:
     
-    def __init__(self,id, data_hora, codigo_colaborador, estado_ticket,tipo_ticket):
-        self.id = id
+    def __init__(self, data_hora, codigo_colaborador, estado_ticket,tipo_ticket):
         self.data_hora = data_hora
         self.codigo_colaborador = codigo_colaborador
         self.estado_ticket = estado_ticket
@@ -14,7 +13,7 @@ class Ticket:
         connection = db.connect()
         if connection:
             cursor = connection.cursor()
-            sql = "INSERT INTO ticket (id,data_hora,codigo_colaborador, estado_ticket, tipo_ticket) VALUES (%s, %s, %s,%s,%s)"
+            sql = "INSERT INTO ticket (data_hora,codigo_colaborador, estado_ticket, tipo_ticket) VALUES (%s, %s,%s,%s)"
             cursor.execute(sql, (self.id,self.data_hora, self.codigo_colaborador, self.estado_ticket, self.tipo_ticket))
             connection.commit()
             db.close(connection)
