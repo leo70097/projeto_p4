@@ -18,4 +18,6 @@ class Utilizadores:
                 cursor.execute(sql,(self.id,self.username,self.password,self.role))
                 connection.commit()
                 db.close(connection)
+
+                #(Ola)
             
