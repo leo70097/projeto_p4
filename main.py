@@ -18,6 +18,7 @@ def main():
             elif user.role == Constants.ROLE_TECHNICIAN :
                 print("Bem-vindo, técnico!")
                 # Adicione lógica para funcionalidades de técnico aqui
+            break
 
 if __name__ == "__main__": 
     main()

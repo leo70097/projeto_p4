@@ -2,26 +2,25 @@ import mysql.connector
 from mysql.connector import Error
 
 class Database:
-    def __init__(self):
-        self.host = 'localhost'
-        self.database = 'helpdesk'
-        self.user = 'root'
-        self.password = ''
 
     def connect(self):
         try:
             connection = mysql.connector.connect(
-                host=self.host,
-                database=self.database,
-                user=self.user,
-                password=self.password
+                host='localhost',
+                user='root',
+                password='',
+                db='helpdesk'
             )
-            if connection.is_connected():
-                return connection
+            print("Connected to MySQL database")
+            return connection
         except Error as e:
-            print(f"Error: {e}")
+            print(f"Error connecting to MySQL database: {e}")
             return None
 
     def close(self, connection):
-        if connection.is_connected():
-            connection.close()
+        try:
+            if connection.is_connected():
+                connection.close()
+                print("MySQL connection closed")
+        except Error as e:
+            print(f"Error closing MySQL connection: {e}")

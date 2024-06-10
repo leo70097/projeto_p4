@@ -12,13 +12,14 @@ class UserController :
         db = Database()
         connection = db.connect()
         if connection:
-            cursor = connection.cursor()
+            cursor = connection.cursor(dictionary= True)
             sql = "SELECT * FROM utilizadores WHERE username = %s AND password = %s"
             cursor.execute(sql, (username, password))
             user_data = cursor.fetchone()
             connection.close()
             if user_data:
                 return Users(user_data['username'], user_data['password'], user_data['role'])
-        return None
+        else:
+            return None
             
         
