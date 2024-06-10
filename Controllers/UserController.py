@@ -18,7 +18,7 @@ class UserController :
             user_data = cursor.fetchone()
             connection.close()
             if user_data:
-                return Users(user_data['username'], user_data['password'], user_data['role'])
+                return Users(user_data['id'],user_data['username'], user_data['password'], user_data['role'])
         else:
             return None
             

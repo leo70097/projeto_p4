@@ -2,7 +2,8 @@ from Utils.db import Database
 
 class Users:
     
-    def __init__(self,username,password,role):
+    def __init__(self,id,username,password,role):
+        self.id = id
         self.username = username
         self.password = password
         self.role = role

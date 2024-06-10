@@ -12,3 +12,9 @@ SUCCESS_USER_CREATED = "Utilizador criado com sucesso com a função: {}"
 SUCCESS_LOGIN = "Login bem-sucedido!"
 ERROR_INVALID_CREDENTIALS = "Credenciais inválidas!"
 INVALID_OPTION = "Opção inválida"
+
+#Estado do Ticket
+
+TICKET_PENDING = "porAtender"
+TICKET_OPEN = "emAtendimento"
+TICKET_CLOSED = "fechado"
