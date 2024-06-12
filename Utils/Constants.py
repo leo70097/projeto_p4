@@ -18,3 +18,7 @@ INVALID_OPTION = "Opção inválida"
 TICKET_PENDING = "porAtender"
 TICKET_OPEN = "emAtendimento"
 TICKET_CLOSED = "fechado"
+
+#Tipos de Ticket
+TICKET_HARDWARE = 'Hardware'
+TICKET_SOFTWARE = 'Software'

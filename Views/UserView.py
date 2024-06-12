@@ -1,46 +1,45 @@
 from Utils.Constants import *
-from Controllers.UserController import UserController
 
 class UserView:
     
-    @staticmethod
-    def user_menu():
-        controller = UserController()
+    def __init__(self, ticket_controller, user):
+        self.ticket_controller = ticket_controller
+        self.user_controller = user
+
+    def user_menu(self):
         while True:
-            print("\n=== Gerenciamento de Utilizadores ===")
-            print("1. Criar Utilizador")
-            print("2. Login")
-            print("0. Voltar")
+            print("\nMenu do Usuário")
+            print("1. Criar Ticket")
+            print("2. Ver Tickets")
+            print("3. Sair")
             choice = input("Escolha uma opção: ")
 
             if choice == '1':
-                username = input("Username: ")
-                password = input("Password: ")
-                role = ''
-                while role not in ['utilizador', 'tecnico']:
-                    role = input("Função (utilizador/tecnico): ").lower()
-                    if role not in ['utilizador', 'tecnico']:
-                        print("Função inválida! Escolha 'utilizador' ou 'tecnico'.")
-                
-                if role == ROLE_TECHNICIAN:
-                    codigo = input("Insira o código de técnico: ")
-                    if codigo != TECHNICIAN_CODE :
-                        print("Código inválido! Registado como 'utilizador'.")
-                        role = ROLE_USER
-                
-                controller.create_user(username, password, role)
-                print(SUCCESS_USER_CREATED.format(role))
-            
+                self.create_ticket()
             elif choice == '2':
-                username = input("Username: ")
-                password = input("Password: ")
-                user = controller.login(username, password)
-                if user:
-                    print(SUCCESS_LOGIN)
-                    return user
-                else:
-                    print(ERROR_INVALID_CREDENTIALS)
-            elif choice == '0':
+                self.view_tickets()
+            elif choice == '3':
                 break
             else:
-                print(INVALID_OPTION)
+                print("Opção inválida, tente novamente.")
+
+    def create_ticket(self):
+        tipo_ticket = input("Tipo de Ticket (hardware/software): ")
+        if tipo_ticket == 'hardware':
+            equipment = input("Equipamento: ")
+            avaria = input("Avaria: ")
+            self.ticket_controller.create_ticket(self.user.id, tipo_ticket, equipment=equipment, avaria=avaria)
+        elif tipo_ticket == 'software':
+            software = input("Software: ")
+            descricao_necessidade = input("Descrição da necessidade: ")
+            self.ticket_controller.create_ticket(self.user.id, tipo_ticket, software=software, descricao_necessidade=descricao_necessidade)
+        else:
+            print("Tipo de ticket inválido!")
+
+    def view_tickets(self):
+        tickets = self.ticket_controller.get_tickets_by_state('porAtender')
+        if tickets:
+            for ticket in tickets:
+                print(f"Ticket ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+        else:
+            print("Não há tickets por atender.")

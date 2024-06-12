@@ -1,46 +1,49 @@
 from Controllers.TicketController import TicketController
+from Utils.Constants import *
 
 class TicketView:
     
-    @staticmethod
-    def ticket_menu():
+    def __init__(self):
+        self.ticket_controller = TicketController()
+
+    def ticket_menu(self):
         while True:
-            print("\n=== Gestão de Tickets ===")
+            print("\nMenu de Tickets")
             print("1. Criar Ticket")
-            print("2. Listar Tickets")
-            print("0. Voltar")
+            print("2. Ver Tickets por Atender")
+            print("3. Ver Tickets Resolvidos")
+            print("4. Sair")
             choice = input("Escolha uma opção: ")
 
             if choice == '1':
-                #tipo_ticket = input("Tipo de Ticket: ")
-                #TicketController.create_ticket(tipo_ticket)
-                TicketView.criar_ticket()
+                self.create_ticket()
             elif choice == '2':
-                break
-            elif choice == '0':
+                self.view_tickets('porAtender')
+            elif choice == '3':
+                self.view_tickets('resolvido')
+            elif choice == '4':
                 break
             else:
-                print("Opção inválida!")
+                print("Opção inválida, tente novamente.")
 
+    def create_ticket(self):
+        tipo_ticket = input("Tipo de Ticket (hardware/software): ")
+        if tipo_ticket == 'hardware':
+            equipment = input("Equipamento: ")
+            issue = input("Avaria: ")
+            self.ticket_controller.create_ticket(ROLE_USER, tipo_ticket, equipment=equipment, issue=issue)
+        elif tipo_ticket == 'software':
+            software = input("Software: ")
+            description = input("Descrição da necessidade: ")
+            self.ticket_controller.create_ticket(ROLE_USER, tipo_ticket, software=software, description=description)
+        else:
+            print("Tipo de ticket inválido!")
 
-    @staticmethod
-    def criar_ticket():
-        while True:
-            print("\n=== Criar Ticket ===")
-            print("1. Hardware")
-            print("2. Software")
-            print("0. Voltar")
-            choice = input("Escolha o tipo de ticket: ")
-
-            if choice == '1':
-                tipo_ticket = 'Hardware'
-                TicketController.create_ticket(tipo_ticket)
-                break
-            elif choice == '2':
-                tipo_ticket = 'Software'
-                TicketController.create_ticket(tipo_ticket)
-                break
-            elif choice == '0':
-                break
-            else:
-                print('Opção invalida!')
+    def view_tickets(self, state):
+        tickets = self.ticket_controller.get_tickets_by_state(state)
+        if tickets:
+            print("\nTickets:")
+            for ticket in tickets:
+                print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+        else:
+            print("Não há tickets neste estado.")

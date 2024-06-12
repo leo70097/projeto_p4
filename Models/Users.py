@@ -1,19 +1,10 @@
+from aifc import Error
 from Utils.db import Database
 
 class Users:
     
-    def __init__(self,id,username,password,role):
+    def __init__(self, id, nome, password, cargo):
         self.id = id
-        self.username = username
+        self.nome = nome
         self.password = password
-        self.role = role
-        
-    def save(self):
-            db = Database()
-            connection = db.connect()
-            if connection :
-                cursor = connection.cursor()
-                sql = "INSERT INTO utilizadores (username,password,role) VALUES (%s,%s,%s)"
-                cursor.execute(sql,(self.username,self.password,self.role))
-                connection.commit()
-                db.close(connection)            
+        self.cargo = cargo

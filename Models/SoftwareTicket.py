@@ -1,27 +1,12 @@
-from Models import Ticket
-from Utils.db import Database
+from datetime import datetime
+from Utils.Constants import *
+from Models.Ticket import Ticket
+from Utils.db import Database   
 
 class SoftwareTicket(Ticket):
     
-    def __init__ (self,software,avaria,dataAtendimento,descricaoIntervencao,estado):
-        super.__init__(id,'porAtender','software')
+    def __init__(self, id, colaborador_id, software, descricao_necessidade, descricao_intervencao=None, estado_ticket='porAtender'):
+        super().__init__(id, colaborador_id, 'porAtender', datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'software')
         self.software = software
-        self.avaria = avaria
-        self.dataAtendimento = dataAtendimento
-        self.descricaoIntervencao = descricaoIntervencao
-        self.estado = estado
-        
-        def save(self):
-            db = Database()
-            connection = db.connect()
-            if connection:
-                #Save the main ticket
-                super().save()
-                #Get the last inserted id
-                cursor = connection.cursor()
-                ticket_id = cursor.lastrowid
-                #Save the software ticket details
-                sql = "INSERT INTO software_tickets (software,avaria,dataAtendimento,descricaoIntervencao,estado) VALUES (%s,%s,%s,%s,%s)"
-                cursor.execute(sql,(ticket_id,self.software,self.avaria,self.dataAtendimento,self.descricaoIntervencao,self.estado))
-                connection.commit()
-                db.close(connection)
+        self.descricao_necessidade = descricao_necessidade
+        self.descricao_intervencao = descricao_intervencao

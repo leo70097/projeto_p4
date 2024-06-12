@@ -1,25 +1,29 @@
+from aifc import Error
 from Models.Users import Users
 from Utils.db import Database
-
-class UserController :
+class UserController:
     
-    def create_user (self,username,password,role):
-        user = Users(username,password,role)
-        user.save()
-        
-        
-    def login(self, username, password):
+    @staticmethod
+    def register(nome, password, cargo):
         db = Database()
         connection = db.connect()
         if connection:
-            cursor = connection.cursor(dictionary= True)
-            sql = "SELECT * FROM utilizadores WHERE username = %s AND password = %s"
-            cursor.execute(sql, (username, password))
-            user_data = cursor.fetchone()
+            cursor = connection.cursor()
+            cursor.execute("INSERT INTO Users (nome, pass, cargo) VALUES (%s, %s, %s)", (nome, password, cargo))
+            connection.commit()
+            cursor.close()
             connection.close()
-            if user_data:
-                return Users(user_data['id'],user_data['username'], user_data['password'], user_data['role'])
-        else:
-            return None
-            
-        
+
+    @staticmethod
+    def login(nome, password):
+        db = Database()
+        connection = db.connect()
+        if connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM Users WHERE nome = %s AND pass = %s", (nome, password))
+            user = cursor.fetchone()
+            cursor.close()
+            connection.close()
+            if user:
+                return Users(*user)
+        return None
