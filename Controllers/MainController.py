@@ -17,9 +17,9 @@ class MainController:
 
     def register(self, nome, password, cargo):
         if cargo == 'utilizador':
-            self.user_controller.register(nome, password)
+            self.user_controller.register(nome, password, cargo)
         elif cargo == 'tecnico':
-            self.technician_controller.register(nome, password)
+            self.user_controller.register(nome, password, cargo)
         else:
             print("Cargo inválido.")
 
@@ -28,7 +28,7 @@ class MainController:
         if user:
             return user
         else:
-            user = self.technician_controller.login(nome, password)
+            user = self.user_controller.login(nome, password)
             if user:
                 return user
             else:
