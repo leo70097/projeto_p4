@@ -1,9 +1,11 @@
 from Controllers.TicketController import TicketController
 from Controllers.StatsController import StatsController
+from Utils.Constants import *
 
 class TechnicianView:
     def __init__(self, controller, user):
         self.controller = controller
+        self.ticket_controller = TicketController()
         self.user = user
         self.stats_controller = StatsController()
 
@@ -28,14 +30,15 @@ class TechnicianView:
                 print("Opção inválida, tente novamente.")
 
     def attend_ticket(self):
+        self.view_tickets()
         ticket_id = int(input("ID do Ticket: "))
         tipo_ticket = input("Tipo de Ticket (hardware/software): ")
         
-        if tipo_ticket == 'hardware':
+        if tipo_ticket == TICKET_HARDWARE:
             descricao_reparacao = input("Descrição da Reparação: ")
             pecas = input("Peças: ")
             self.controller.update_ticket(ticket_id, tipo_ticket=tipo_ticket, descricao_reparacao=descricao_reparacao, pecas=pecas)
-        elif tipo_ticket == 'software':
+        elif tipo_ticket == TICKET_SOFTWARE:
             descricao_intervencao = input("Descrição da Intervenção: ")
             self.controller.update_ticket(ticket_id, tipo_ticket=tipo_ticket, descricao_intervencao=descricao_intervencao)
         else:
@@ -44,10 +47,14 @@ class TechnicianView:
     def view_tickets(self):
         tickets = self.controller.get_tickets_by_state('porAtender')
         if tickets:
+            print("\n Tickets por Atender:")
             for ticket in tickets:
-                print(f"Ticket ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
-        else:
-            print("Não há tickets por atender.")
+                if ticket.tipo_ticket == TICKET_HARDWARE :
+                    hardwareTicket =  self.ticket_controller.get_hardware_ticket(ticket.id)
+                    print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Equipamento: {hardwareTicket[0].equipment}, Avaria: {hardwareTicket[0].avaria}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                elif ticket.tipo_ticket == TICKET_SOFTWARE:
+                    softwareTicket =  self.ticket_controller.get_software_ticket(ticket.id)
+                    print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Software: {softwareTicket[0].software}, Descrição da necessidade: {softwareTicket[0].descricao_necessidade}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
 
 
     def show_statistics_menu(self):

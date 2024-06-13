@@ -11,7 +11,6 @@ class Database:
                 password='',
                 db='helpdesk'
             )
-            print("Connected to MySQL database")
             return connection
         except Error as e:
             print(f"Error connecting to MySQL database: {e}")
