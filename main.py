@@ -4,9 +4,11 @@ from Views.TechnicianView import TechnicianView
 from Utils.Constants import *
 from Controllers.MainController import MainController
 
+
 if __name__ == "__main__":
     main_controller = MainController()
     user = main_controller.run()
+    
 
     if user is not None:  # Verificar se o usuário não é None antes de acessar o atributo cargo
         if user.cargo == 'utilizador':

@@ -4,7 +4,7 @@ class UserView:
     
     def __init__(self, ticket_controller, user):
         self.ticket_controller = ticket_controller
-        self.user_controller = user
+        self.user = user
 
     def user_menu(self):
         while True:
