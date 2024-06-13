@@ -43,13 +43,13 @@ class TicketController:
             estado_ticket = 'atendido'
             try:
                 if kwargs.get('tipo_ticket') == 'hardware':
-                    cursor.execute("UPDATE HardwareTicket SET descricao_reparacao = %s, pecas = %s WHERE id = %s",
-                                (kwargs.get('descricao_reparacao'), kwargs.get('pecas'), ticket_id))
+                    cursor.execute("UPDATE HardwareTicket SET descricao_reparacao = %s, pecas = %s, data_hora_atendimento = %s WHERE id = %s",
+                                (kwargs.get('descricao_reparacao'), kwargs.get('pecas'), data_hora_atendimento ,ticket_id))
                 elif kwargs.get('tipo_ticket') == 'software':
-                    cursor.execute("UPDATE SoftwareTicket SET descricao_intervencao = %s WHERE id = %s",
-                               (kwargs.get('descricao_intervencao'), ticket_id))
-                cursor.execute("UPDATE Ticket SET estado_ticket = %s, data_hora = %s WHERE id = %s",
-                           (estado_ticket, data_hora_atendimento, ticket_id))
+                    cursor.execute("UPDATE SoftwareTicket SET descricao_intervencao = %s, data_hora_atendimento = %s WHERE id = %s",
+                               (kwargs.get('descricao_intervencao'), data_hora_atendimento, ticket_id))
+                cursor.execute("UPDATE Ticket SET estado_ticket = %s WHERE id = %s",
+                           (estado_ticket, ticket_id))
                 connection.commit()
                 print("Ticket atualizado com sucesso!")
             except Error as e:

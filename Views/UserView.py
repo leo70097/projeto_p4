@@ -40,6 +40,6 @@ class UserView:
         tickets = self.ticket_controller.get_tickets_by_state('porAtender')
         if tickets:
             for ticket in tickets:
-                print(f"Ticket ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                print(f"Ticket ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}, ")
         else:
             print("Não há tickets por atender.")
