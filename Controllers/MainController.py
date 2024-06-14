@@ -4,6 +4,9 @@ from Controllers.TechnicianController import TechnicianController
 from Controllers.TicketController import TicketController
 
 class MainController:
+    """
+    Executa o menu principal e retorna o usuário autenticado.
+    """
     
     def __init__(self):
         self.main_view = MainView(self)
@@ -24,6 +27,13 @@ class MainController:
             print("Cargo inválido.")
 
     def login(self, nome, password):
+        """
+        Realiza o login de um usuário.
+
+        Parâmetros:
+        nome (str): O nome do usuário.
+        password (str): A senha do usuário.
+        """
         user = self.user_controller.login(nome, password)
         if user:
             return user

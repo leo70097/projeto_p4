@@ -2,9 +2,18 @@
 class MainView:
     
     def __init__(self, controller):
+        """
+        Inicializador da classe MainView.
+
+        Args:
+            controller: Objeto controlador que gerencia as operações do sistema.
+        """
         self.controller = controller
 
     def main_menu(self):
+        """
+        Exibe o menu principal e permite ao usuário escolher entre registrar, fazer login ou sair do sistema.
+        """
         while True:
             print("\nBem-vindo ao Ticket2Help")
             print("1. Registrar")
@@ -22,6 +31,10 @@ class MainView:
                 print("Opção inválida, tente novamente.")
 
     def register(self):
+        """
+        Método para registrar um novo usuário no sistema.
+        Solicita nome, senha e tipo de usuário (utilizador ou técnico) e chama o método de registro do controlador.
+        """
         nome = input("Nome: ")
         password = input("Senha: ")
         while True:
@@ -37,6 +50,10 @@ class MainView:
         print("Usuário registrado com sucesso!")
 
     def login(self):
+        """
+        Método para realizar login de um usuário no sistema.
+        Solicita nome e senha, chama o método de login do controlador e retorna o usuário autenticado.
+        """
         nome = input("Nome: ")
         password = input("Senha: ")
         user = self.controller.login(nome, password)

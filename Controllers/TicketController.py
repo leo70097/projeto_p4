@@ -6,9 +6,21 @@ from Models.Ticket import Ticket
 from Utils.db import Database
 
 class TicketController:
+    """
+    Controlador responsável por gerenciar os tickets, incluindo criação, atualização e recuperação de tickets.
+    """
     
     @staticmethod
     def create_ticket(colaborador_id, tipo_ticket, **kwargs):
+        """
+        Cria um novo ticket no sistema.
+
+        Parâmetros:
+        colaborador_id (int): ID do colaborador que está criando o ticket.
+        tipo_ticket (str): Tipo do ticket ('hardware' ou 'software').
+        Argumentos adicionais necessários para a criação do ticket, dependendo do tipo.
+
+        """
         db = Database()
         connection = db.connect()
         if connection:
@@ -35,6 +47,15 @@ class TicketController:
 
     @staticmethod
     def update_ticket(ticket_id, **kwargs):
+        """
+        Acrescenta dados de um ticket existente no sistema dependendo se
+        é de hardware ou de software.
+
+        Parâmetros:
+        ticket_id (int): ID do ticket a ser atualizado.
+        Argumentos adicionais necessários para a atualização do ticket.
+
+        """
         db = Database()
         connection = db.connect()
         if connection:
@@ -60,6 +81,13 @@ class TicketController:
                 
     @staticmethod
     def get_tickets_by_user_id(colaborador_id):
+        """
+        Recupera todos os tickets associados a um colaborador específico.
+
+        Parâmetros:
+        colaborador_id (int): ID do colaborador.
+
+        """
         db = Database()
         connection = db.connect()
         if connection:
@@ -80,6 +108,12 @@ class TicketController:
                 
     @staticmethod
     def get_tickets_by_state(state):
+        """
+        Recupera todos os tickets com um estado específico.
+
+        Parâmetros:
+        state (str): O estado dos tickets a serem recuperados.
+        """
         db = Database()
         connection = db.connect()
         if connection:

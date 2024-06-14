@@ -5,6 +5,9 @@ from Utils.Constants import *
 
 
 class Ticket:
+    """
+    Classe base para representar um ticket no sistema de helpdesk.
+    """
     def __init__(self, id, colaborador_id, estado_ticket, data_hora, tipo_ticket):
         self.id = id
         self.colaborador_id = colaborador_id

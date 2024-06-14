@@ -4,6 +4,9 @@ from Models.Ticket import Ticket
 from datetime import datetime
 
 class HardwareTicket(Ticket):
+    """
+    Classe representando um ticket de hardware, herdando da classe base Ticket.
+    """
                 
     def __init__(self, id, colaborador_id, equipment, avaria, descricao_reparacao=None, data_hora_atendimento=None, pecas=None):
         super().__init__(id, colaborador_id, TICKET_PENDING, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), TICKET_HARDWARE)

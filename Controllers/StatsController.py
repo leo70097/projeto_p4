@@ -4,16 +4,30 @@ from Utils.db import Database
 
 class StatsController:
 
+    """
+    Controlador responsável pelo cálculo de estatísticas relacionadas aos tickets.
+    """
     def percent_tickets_atendidos_intervalo_datas(self, start_date, end_date):
+        """
+        Calcula o percentual de tickets atendidos dentro de um intervalo de datas.
+
+        Parâmetros:
+        start_date (datetime): Data de início do intervalo.
+        end_date (datetime): Data de fim do intervalo.
+
+        """
+        
         db = Database()
         connection = db.connect()
         if connection:
             try:
                 cursor = connection.cursor()
+                # Conta o número total de tickets atendidos no intervalo de datas
                 query = "SELECT COUNT(*) FROM Ticket WHERE estado_ticket = 'atendido' AND data_hora BETWEEN %s AND %s"
                 cursor.execute(query, (start_date, end_date))
                 total_tickets = cursor.fetchone()[0]
 
+                # Conta o número total de tickets no intervalo de datas
                 query = "SELECT COUNT(*) FROM Ticket WHERE data_hora BETWEEN %s AND %s"
                 cursor.execute(query, (start_date, end_date))
                 total_tickets_periodo = cursor.fetchone()[0]

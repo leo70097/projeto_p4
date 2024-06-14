@@ -4,6 +4,9 @@ from mysql.connector import Error
 class Database:
 
     def connect(self):
+        """
+        Método para estabelecer uma conexão com o banco de dados MySQL.
+        """
         try:
             connection = mysql.connector.connect(
                 host='localhost',
@@ -17,6 +20,13 @@ class Database:
             return None
 
     def close(self, connection):
+        """
+        Método para fechar uma conexão MySQL.
+
+        Args:
+            connection: Objeto de conexão MySQL a ser fechado.
+
+        """
         try:
             if connection.is_connected():
                 connection.close()

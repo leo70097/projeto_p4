@@ -4,12 +4,20 @@ from Utils.Constants import *
 
 class TechnicianView:
     def __init__(self, controller, user):
+        """
+        Inicializador da classe TechnicianView.
+
+        """
         self.controller = controller
         self.ticket_controller = TicketController()
         self.user = user
         self.stats_controller = StatsController()
 
     def technician_menu(self):
+        """
+        Exibe o menu principal para o técnico e permite que ele escolha entre atender tickets, ver tickets por atender
+        ou ver estatísticas do sistema.
+        """
         while True:
             print("\nMenu do Técnico")
             print("1. Atender Ticket")
@@ -30,6 +38,10 @@ class TechnicianView:
                 print("Opção inválida, tente novamente.")
 
     def attend_ticket(self):
+        """
+        Permite ao técnico atender um ticket. Ele pode escolher entre tipos de ticket (hardware ou software) e
+        fornecer as informações necessárias para atualizar o ticket no sistema.
+        """
         self.view_tickets()
         ticket_id = int(input("ID do Ticket: "))
         tipo_ticket = input("Tipo de Ticket (hardware/software): ")
@@ -45,6 +57,9 @@ class TechnicianView:
             print("Tipo de ticket inválido!")
 
     def view_tickets(self):
+        """
+        Exibe todos os tickets que estão por atender no sistema, mostrando detalhes específicos dependendo do tipo de ticket.
+        """
         tickets = self.controller.get_tickets_by_state('porAtender')
         if tickets:
             print("\n Tickets por Atender:")
@@ -65,6 +80,9 @@ class TechnicianView:
 
 
     def show_statistics_menu(self):
+        """
+        Exibe o menu de estatísticas para que o técnico possa escolher entre várias opções estatísticas.
+        """
         while True:
             print("\nMenu de Estatísticas")
             print("1. Percentual de Tickets Atendidos num Intervalo de Datas")
@@ -86,6 +104,9 @@ class TechnicianView:
 
 
     def show_percent_tickets_atendidos(self):
+        """
+        Exibe o percentual de tickets atendidos dentro de um intervalo de datas fornecido pelo técnico.
+        """
         start_date = input("Data de início (YYYY-MM-DD): ")
         end_date = input("Data de fim (YYYY-MM-DD): ")
         percent_atendidos = self.stats_controller.percent_tickets_atendidos_intervalo_datas(start_date, end_date)
@@ -93,12 +114,18 @@ class TechnicianView:
        
         
     def show_percent_tickets_resolvidos_nao_resolvidos(self):
+        """
+        Exibe o percentual de tickets resolvidos e não resolvidos no sistema.
+        """
         resolved_percent, not_resolved_percent = self.stats_controller.percent_tickets_resolvidos_nao_resolvidos()
         print(f"Percentual de Tickets Resolvidos: {resolved_percent:.2f}%")
         print(f"Percentual de Tickets Não Resolvidos: {not_resolved_percent:.2f}%")
 
 
     def show_media_tempo_atendimento(self):
+        """
+        Exibe a média de tempo de atendimento por tipo de ticket (hardware ou software).
+        """
         media_tempo_atendimento = self.stats_controller.media_tempo_atendimento_por_tipo()
         for tipo, media in media_tempo_atendimento.items():
             print(f"Média de Tempo de Atendimento para {tipo}: {media:.2f} minutos")
