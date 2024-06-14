@@ -35,28 +35,19 @@ class MainView:
         Método para registrar um novo usuário no sistema.
         Solicita nome, senha e tipo de usuário (utilizador ou técnico) e chama o método de registro do controlador.
         """
+        nome = input("Nome: ")
+        password = input("Senha: ")
         while True:
-            nome = input("Nome: ").strip()
-            if not nome:
-                print("Nome não pode ser nulo ou vazio.")
-                continue
+            escolha = input("Escolha uma opção (1 para usuário, 2 para técnico): ")
+            cargo = 'utilizador' if escolha == '1' else ('tecnico' if escolha == '2' else None)
             
-            password = input("Senha: ").strip()
-            if not password:
-                print("Senha não pode ser nula ou vazia.")
-                continue
-    
-            while True:
-                escolha = input("Escolha uma opção (1 para usuário, 2 para técnico): ")
-                if escolha not in ('1', '2'):
-                    print("Opção inválida. Escolha apenas 1 ou 2.")
-                    continue
-                cargo = 'utilizador' if escolha == '1' else 'tecnico'
+            if cargo:
                 break
-        
-            print(f"Cargo selecionado: {cargo}")
-            self.controller.register(nome, password, cargo)
-            print("Usuário registrado com sucesso!")
+            else:
+                print("Opção inválida. Escolha apenas 1 ou 2.")
+        print(f"Cargo selecionado: {cargo}")
+        self.controller.register(nome, password, cargo)
+        print("Usuário registrado com sucesso!")
 
     def login(self):
         """
