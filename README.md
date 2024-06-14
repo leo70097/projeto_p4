@@ -25,8 +25,9 @@ Copiar código
 +-------------------+
 |    User View      |
 |                   |
-| - User menu       |
-| - Interactions    |
+| - User View       |
+| - Main View       |
+| - TechnicianView  |
 +---------+---------+
           |
           |
@@ -38,12 +39,15 @@ Copiar código
 +---------+---------+
           |
           |
-+---------v---------+
-|   Controllers     |
-|                   |
-| - TicketController|
-| - UserController  |
-+---------+---------+
++---------v--------------+
+|   Controllers          |
+|                        |
+| - TicketController     |
+| - UserController       |
+| - MainController       |
+| - StatsController      |
+| - TechnicianController |
++---------+--------------+
           |
           |
 +---------v---------+
@@ -52,14 +56,14 @@ Copiar código
 | - Ticket          |
 | - HardwareTicket  |
 | - SoftwareTicket  |
+| - Users           |
 +---------+---------+
           |
           |
 +---------v---------+
 |     Database      |
 |                   |
-| - MySQL           |
-| - Connection Mgmt |
+| - db              |
 +-------------------+
 1.4. Fluxo de Dados
 Criação de Ticket:
@@ -97,7 +101,7 @@ Ticket2Help é uma aplicação de gerenciamento de tickets que permite aos usuá
   - `HardwareTicket.py`
   - `SoftwareTicket.py`
 - **Views**: Gerenciam a interface do usuário.
-  - `TicketView.py`
+  - `TechnicianView.py`
   - `MainView.py`
   - `UserView.py`
 - **Utils**: Utilitários e configurações.
