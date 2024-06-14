@@ -19,9 +19,9 @@ UserView: Gerencia o menu e interações relacionadas a usuários.
 Utils: Contêm utilitários e configurações gerais, como conexão ao banco de dados.
 
 db: Classe para gerenciar a conexão ao banco de dados.
+
 1.3. Diagrama de Arquitetura
-plaintext
-Copiar código
+
 +-------------------+
 |    User View      |
 |                   |
