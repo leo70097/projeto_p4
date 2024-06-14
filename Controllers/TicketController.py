@@ -48,8 +48,8 @@ class TicketController:
                 elif kwargs.get('tipo_ticket') == 'software':
                     cursor.execute("UPDATE SoftwareTicket SET descricao_intervencao = %s, data_hora_atendimento = %s WHERE id = %s",
                                (kwargs.get('descricao_intervencao'), data_hora_atendimento, ticket_id))
-                cursor.execute("UPDATE Ticket SET estado_ticket = %s, data_hora = %s WHERE id = %s",
-                           (estado_ticket,data_hora_atendimento, ticket_id))
+                cursor.execute("UPDATE Ticket SET estado_ticket = %s WHERE id = %s",
+                           (estado_ticket, ticket_id))
                 connection.commit()
                 print("Ticket atualizado com sucesso!")
             except Error as e:
@@ -105,10 +105,11 @@ class TicketController:
         if connection:
             cursor = connection.cursor()
             try:
-                cursor.execute("SELECT * FROM HardwareTicket WHERE id = %s",(ticketId,))
+                cursor.execute("SELECT id, colaborador_id, equipment, avaria, descricao_reparacao, pecas, data_hora_atendimento FROM HardwareTicket WHERE id = %s",(ticketId,))
                 hardwares = []
                 for row in cursor.fetchall():
-                    hardware = HardwareTicket(*row)
+                    id, colaborador_id, equipment, avaria, descricao_reparacao, pecas, data_hora_atendimento = row
+                    hardware = HardwareTicket(id, colaborador_id, equipment, avaria, descricao_reparacao, data_hora_atendimento, pecas)
                     hardwares.append(hardware)
                 return hardwares
             except Error as e:

@@ -24,15 +24,15 @@ class UserView:
                 print("Opção inválida, tente novamente.")
 
     def create_ticket(self):
-        tipo_ticket = 'hardware' if input("Tipo de Ticket (1 para hardware, 2 para software): ") == '1' else 'software'
-        if tipo_ticket == 'hardware':
+        tipo_ticket = input("Tipo de Ticket (1 para hardware, 2 para software): ")
+        if tipo_ticket == '1':
             equipment = input("Equipamento: ")
             avaria = input("Avaria: ")
-            self.ticket_controller.create_ticket(self.user.id, tipo_ticket, equipment=equipment, avaria=avaria)
-        elif tipo_ticket == 'software':
+            self.ticket_controller.create_ticket(self.user.id, 'hardware', equipment=equipment, avaria=avaria)
+        elif tipo_ticket == '2':
             software = input("Software: ")
             descricao_necessidade = input("Descrição da necessidade: ")
-            self.ticket_controller.create_ticket(self.user.id, tipo_ticket, software=software, descricao_necessidade=descricao_necessidade)
+            self.ticket_controller.create_ticket(self.user.id, 'software', software=software, descricao_necessidade=descricao_necessidade)
         else:
             print("Tipo de ticket inválido!")
             
@@ -41,9 +41,24 @@ class UserView:
         if tickets:
             print("\nMeus Tickets:")
             for ticket in tickets:
-                if ticket.tipo_ticket == TICKET_HARDWARE :
-                    hardwareTicket =  self.ticket_controller.get_hardware_ticket(ticket.id)
-                    print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Equipamento: {hardwareTicket[0].equipment}, Avaria: {hardwareTicket[0].avaria}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                if ticket.tipo_ticket == TICKET_HARDWARE:
+                    hardware_tickets = self.ticket_controller.get_hardware_ticket(ticket.id)
+                    if hardware_tickets:
+                        hardware_ticket = hardware_tickets[0]  # Assume que só há um ticket de hardware por ID
+                        print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Equipamento: {hardware_ticket.equipment}, Avaria: {hardware_ticket.avaria}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                    else:
+                        print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket} não encontrado")
+                
                 elif ticket.tipo_ticket == TICKET_SOFTWARE:
-                    softwareTicket =  self.ticket_controller.get_software_ticket(ticket.id)
-                    print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Software: {softwareTicket[0].software}, Descrição da necessidade: {softwareTicket[0].descricao_necessidade}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                    software_tickets = self.ticket_controller.get_software_ticket(ticket.id)
+                    if software_tickets:
+                        software_ticket = software_tickets[0]  # Assume que só há um ticket de software por ID
+                        print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Software: {software_ticket.software}, Descrição da necessidade: {software_ticket.descricao_necessidade}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                    else:
+                        print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket} não encontrado")
+                
+                else:
+                    print(f"ID: {ticket.id}, Tipo de ticket inválido: {ticket.tipo_ticket}")
+        
+        else:
+            print("Não há tickets disponíveis para este usuário.")

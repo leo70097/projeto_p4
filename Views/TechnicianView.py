@@ -49,12 +49,19 @@ class TechnicianView:
         if tickets:
             print("\n Tickets por Atender:")
             for ticket in tickets:
-                if ticket.tipo_ticket == TICKET_HARDWARE :
-                    hardwareTicket =  self.ticket_controller.get_hardware_ticket(ticket.id)
-                    print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Equipamento: {hardwareTicket[0].equipment}, Avaria: {hardwareTicket[0].avaria}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                if ticket.tipo_ticket == TICKET_HARDWARE:
+                    hardwareTicket = self.ticket_controller.get_hardware_ticket(ticket.id)
+                    if hardwareTicket:
+                        print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Equipamento: {hardwareTicket[0].equipment}, Avaria: {hardwareTicket[0].avaria}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                    else:
+                        print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Equipamento: Não encontrado, Avaria: Não encontrada, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
                 elif ticket.tipo_ticket == TICKET_SOFTWARE:
-                    softwareTicket =  self.ticket_controller.get_software_ticket(ticket.id)
-                    print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Software: {softwareTicket[0].software}, Descrição da necessidade: {softwareTicket[0].descricao_necessidade}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                    softwareTicket = self.ticket_controller.get_software_ticket(ticket.id)
+                    if softwareTicket:
+                        print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Software: {softwareTicket[0].software}, Descrição da necessidade: {softwareTicket[0].descricao_necessidade}, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+                    else:
+                        print(f"ID: {ticket.id}, Tipo: {ticket.tipo_ticket}, Software: Não encontrado, Descrição da necessidade: Não encontrada, Estado: {ticket.estado_ticket}, Data/Hora: {ticket.data_hora}")
+
 
 
     def show_statistics_menu(self):
