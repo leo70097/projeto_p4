@@ -24,7 +24,15 @@ class MainView:
     def register(self):
         nome = input("Nome: ")
         password = input("Senha: ")
-        cargo = 'utilizador' if input("Escolha uma opção (1 para usuário, 2 para técnico): ") == '1' else 'tecnico'
+        while True:
+            escolha = input("Escolha uma opção (1 para usuário, 2 para técnico): ")
+            cargo = 'utilizador' if escolha == '1' else ('tecnico' if escolha == '2' else None)
+            
+            if cargo:
+                break
+            else:
+                print("Opção inválida. Escolha apenas 1 ou 2.")
+        print(f"Cargo selecionado: {cargo}")
         self.controller.register(nome, password, cargo)
         print("Usuário registrado com sucesso!")
 
